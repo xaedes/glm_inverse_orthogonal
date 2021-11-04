@@ -23,14 +23,7 @@ glm::mat4 inverse_orthogonal(const glm::mat4& m)
         0, 0, m[0][0]*Coef06, 0,
         m[1][1]*Coef16, m[0][0]*Coef08, 0, m[0][0]*Coef11
     );
-
-    vec<4, T, Q> Row0(
-        Inverse[0][0], 
-        Inverse[1][0], 
-        Inverse[2][0], 
-        Inverse[3][0]
-    );
-
+    
     auto Determinant = (m[0][0] * Inverse[0][0]);
     T OneOverDeterminant = static_cast<T>(1) / Determinant;
 
