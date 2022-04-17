@@ -3,6 +3,41 @@
 #include <glm/glm.hpp>
 
 namespace inverse_ortho {
+    
+    glm::mat4 inverse_orthogonal(const glm::mat4& m)
+    {
+        // generic orthogonal projection matrix of form [
+        //  a,0,0,0,
+        //  0,b,0,0,
+        //  0,0,c,0,
+        //  d,e,f,1
+        // ]
+        // 
+        // symbolic inverse is [
+        //  1/a,0,0,0,
+        //  0,1/b,0,0,
+        //  0,0,1/c,0,
+        //  -d/a,-e/b,-f/c,1
+        // ]
+
+        auto a = m[0][0];
+        auto b = m[1][1];
+        auto c = m[2][2];
+        auto d = m[3][0];
+        auto e = m[3][1];
+        auto f = m[3][2];
+        glm::mat4 inv = glm::mat4(0);
+        inv[0][0] = 1/a;
+        inv[1][1] = 1/b;
+        inv[2][2] = 1/c;
+        inv[3][3] = 1;
+
+        inv[3][0] = -d/a;
+        inv[3][1] = -e/b;
+        inv[3][2] = -f/c;
+        return inv;
+    }
+    
     // A lot of values in orthogonal matrices (see glm/glm/ext/matrix_clip_space.inl) are known.
     // Simplify compute_inverse<4, 4, T, Q, Aligned> (see glm/glm/detail/func_matrix.inl) using all known values of the respective orthogonal matrix.
 
